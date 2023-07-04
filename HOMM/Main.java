@@ -9,8 +9,8 @@ public class Main {
         BaseUnit[] team2 = new BaseUnit[10];
 
         for (int i = 0; i < 10; i++) {
-            team1[i] = randomUnit(new Random().nextInt(8));
-            team2[i] = randomUnit(new Random().nextInt(8));
+            team1[i] = randomUnit(new Random().nextInt(7));
+            team2[i] = randomUnit(new Random().nextInt(7));
         }
 
         System.out.println("Команда красных ");
@@ -34,8 +34,6 @@ public class Main {
             case 4:
                 return new Peasant();
             case 5:
-                return new Bandit();
-            case 6:
                 return new SpearMan();
             default:
                 return new Sniper();

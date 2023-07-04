@@ -20,7 +20,7 @@ public abstract class CasterUnit extends BaseUnit {
 
     public int getMana() { return this.mana; }
 
-    public boolean setMana(int cost) {
+    protected boolean setMana(int cost) {
         if (this.mana > cost) {
             this.mana -= cost;
             return true;

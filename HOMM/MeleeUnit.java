@@ -1,6 +1,6 @@
 package HOMM;
 
-public class MeleeUnit extends BaseUnit{
+public abstract class MeleeUnit extends BaseUnit{
     
     /**
      * Характеристики милишника

@@ -1,6 +1,6 @@
 package HOMM;
  
-public abstract class BaseUnit {
+public abstract class BaseUnit implements Interface{
 
     private int damage; 
     private int hp; 
@@ -27,9 +27,13 @@ public abstract class BaseUnit {
     public int getInitiative() { return this.initiative; }
     public int getSpeed() { return this.speed; }
 
-    public void setHp(int dif) { this.hp -= dif; }
-
-    public void move() {} // если реализовать игровое поле, может двумерный массив? 
+    protected void setHp(int dif) { this.hp -= dif; }
 
     public void waiting() {} // реализовать шкалу инициативы 
+
+    public void step() {}
+
+    public String getInfo() {
+        return String.format("Юнит: %s", getClass()).replace("class HOMM.", "");
+    }
 }

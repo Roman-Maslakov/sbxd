@@ -1,4 +1,4 @@
-package HOMM;
+package HOMM.Units;
 
 public abstract class RangeUnit extends BaseUnit {
 
@@ -13,14 +13,18 @@ public abstract class RangeUnit extends BaseUnit {
      * @param shots      - кол-во выстрелов
      */
 
-    public RangeUnit(int damage, int hp, int initiative, int speed, int shots) {
+    public RangeUnit(String name, int damage, int hp, int initiative, int speed, int shots, int x, int y) {
 
-        super(damage, hp, initiative, speed);
+        super(name, damage, hp, initiative, speed, x, y);
         this.shots = shots;
     }
 
     public int getShots() {
         return this.shots;
+    }
+
+    public void setShots(int dif) {
+        this.shots += dif;
     }
 
     public void shoot(BaseUnit unit) {

@@ -1,4 +1,4 @@
-package HOMM;
+package HOMM.Units;
 
 public abstract class MeleeUnit extends BaseUnit{
     
@@ -9,8 +9,8 @@ public abstract class MeleeUnit extends BaseUnit{
      * @param initiative - инициатива
      * @param speed      - кол-во клеток перемещения за ход
      */
-    public MeleeUnit(int damage, int hp, int initiative, int speed){
-        super(damage, hp, initiative, speed);
+    public MeleeUnit(String name, int damage, int hp, int initiative, int speed, int x, int y){
+        super(name, damage, hp, initiative, speed, x, y);
     }
 
     public void attack(BaseUnit unit) { unit.setHp(getDamage()); }

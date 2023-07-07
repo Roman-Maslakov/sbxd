@@ -1,4 +1,4 @@
-package HOMM;
+package HOMM.Units;
 
 public abstract class CasterUnit extends BaseUnit {
 
@@ -13,8 +13,8 @@ public abstract class CasterUnit extends BaseUnit {
      * @param mana       - кол-во маны
      */
 
-    CasterUnit(int damage, int hp, int initiative, int speed, int mana) {
-        super(damage, hp, initiative, speed);
+    CasterUnit(String name, int damage, int hp, int initiative, int speed, int mana, int x, int y) {
+        super(name, damage, hp, initiative, speed, x, y);
         this.mana = mana;
     }
 

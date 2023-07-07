@@ -1,10 +1,10 @@
-package HOMM;
+package HOMM.Units;
 
 public class Monk extends CasterUnit{
     
-    public Monk() {
+    public Monk(String name, int x, int y) {
 
-        super(7, 15, 3, 1, 20);
+        super(name, 7, 15, 3, 1, 20, x, y);
     }
 
     public void healSpell(BaseUnit unit) {

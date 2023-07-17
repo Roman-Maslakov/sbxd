@@ -1,9 +1,9 @@
 package HOMM.Units;
 
-public class SpearMan extends MeleeUnit{
-    
+public class SpearMan extends MeleeUnit {
+
     public SpearMan(String name, int x, int y) {
-        
-        super(name, 3, 13, 4, 4, x, y);
+
+        super(name, new int[] { 2, 4 }, 13, 4, 4, x, y);
     }
 }

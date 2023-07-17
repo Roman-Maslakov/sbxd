@@ -1,69 +1,117 @@
 package HOMM.Units;
 
 import java.util.ArrayList;
+import java.util.Random;
 
-public abstract class BaseUnit implements Interface{
+public abstract class BaseUnit implements Interface {
 
-    private int x, y;
-    private String team;
+    private Integer x, y;
+    private ArrayList<BaseUnit> team;
     private String name;
-    private int damage; 
-    private int hp; 
+    private int[] damage = new int[2];
+    private int hp;
     private int initiative;
     private int speed;
 
     /**
      * Характеристики юнита
-     * @param damage - единицы урона
-     * @param hp - единицы здоровья
+     * 
+     * @param damage     - единицы урона
+     * @param hp         - единицы здоровья
      * @param initiative - инициатива
-     * @param speed - кол-во клеток перемещения за ход
+     * @param speed      - кол-во клеток перемещения за ход
      */
 
-    public BaseUnit(String name, int damage, int hp, int initiative, int speed, int x, int y) {
+    public BaseUnit(String name, int[] damage, int hp, int initiative, int speed, int x, int y) {
         this.name = name;
         this.damage = damage;
         this.hp = hp;
         this.initiative = initiative;
         this.speed = speed;
+        this.x = x - 1;
+        this.y = y - 1;
+    }
+
+    public Integer getX() {
+        return this.x;
+    }
+
+    public Integer getY() {
+        return this.y;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getNameTeam() {
+        return this.team.equals(Field.red) ? "Красных" : "Синих";
+    }
+
+    public ArrayList<BaseUnit> getTeam() {
+        return this.team;
+    }
+
+    public int getHp() {
+        return this.hp;
+    }
+
+    public int getDamage() {
+        return new Random().nextInt(this.damage[0], this.damage[1] + 1);
+    }
+
+    public int getInitiative() {
+        return this.initiative;
+    }
+
+    public int getSpeed() {
+        return this.speed;
+    }
+
+    public void setX(int x) {
         this.x = x;
+    }
+
+    public void setY(int y) {
         this.y = y;
     }
 
-    public int getX() { return this.x; }
-    public int getY() { return this.y; }
-    public String getName() { return this.name; }
-    public int getHp() { return this.hp; }
-    public int getDamage() { return this.damage; }
-    public int getInitiative() { return this.initiative; }
-    public int getSpeed() { return this.speed; }
+    public void setTeam(ArrayList<BaseUnit> team) {
+        this.team = team;
+    }
 
-    public void setX(int x) { this.x = x; }
-    public void setY(int y) { this.y = y; }
-    public void setTeam(String team) { this.team = team; }
+    public void setHp(int dif) {
+        this.hp -= dif;
+    }
 
-    public void setHp(int dif) { this.hp -= dif; }
+    public void waiting() {
+    } // реализовать шкалу инициативы
 
-    public void waiting() {} // реализовать шкалу инициативы 
-
-    public void step() {} // позже
+    public boolean isAlive() {
+        if (this.hp > 0)
+            return true;
+        return false;
+    }
 
     public String getInfo() {
-        return String.format("Юнит: %s, Имя: %s, координаты х: %d y: %d, команда: %s \n", 
-        getClass(), getName(), this.x, this.y, this.team)
-        .replace("class HOMM.Units.", "");
+        return String.format("Юнит: %s, Имя: %s, клетка на поле х: %d y: %d, команда: %s, хп: %d\n",
+                getClass(), getName(), this.x + 1, this.y + 1, getNameTeam(), this.hp)
+                .replace("class HOMM.Units.", "");
     }
 
-    public int getDistance(BaseUnit unit) { 
-        return (int)(Math.ceil(Math.sqrt(Math.pow(unit.getX() - this.x, 2) + Math.pow(unit.getY() - this.y, 2)))); 
+    public int getDistance(BaseUnit unit) {
+        if (unit.isAlive())
+            return (int) (Math.ceil(Math.sqrt(Math.pow(unit.getX() - this.x, 2) + Math.pow(unit.getY() - this.y, 2))));
+        else
+            return -1;
     }
 
-    public BaseUnit findClosestEnemy() { 
-        ArrayList<BaseUnit> teamEnemy = this.team.equals("Красных") ? Field.blueTeam : Field.redTeam;
-        BaseUnit closest = teamEnemy.get(0);
-        int minDistance = getDistance(closest);
+    public BaseUnit findClosestEnemy() {
+        ArrayList<BaseUnit> teamEnemy = this.team.equals(Field.red) ? Field.blue : Field.red;
+        BaseUnit closest = null;
+        int minDistance = 13; // максимальная дистанция на поле +1
         for (BaseUnit unit : teamEnemy) {
-            if (minDistance > getDistance(unit)) {
+            if (unit.isAlive() && minDistance > getDistance(unit)) {
                 minDistance = getDistance(unit);
                 closest = unit;
             }

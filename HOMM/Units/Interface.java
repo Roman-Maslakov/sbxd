@@ -1,7 +1,7 @@
 package HOMM.Units;
 
 public interface Interface {
-    
+
     void step();
 
     String getInfo();

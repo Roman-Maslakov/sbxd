@@ -5,20 +5,23 @@ import HOMM.Units.*;
 public class Main {
     public static void main(String[] args) {
 
-        Peasant farmer = new Peasant("Бедный Крестьянин", 2, 2);
-        Peasant farmer2 = new Peasant("Бедный Крестьянин2", 2, 5);
-        Peasant farmer3 = new Peasant("Бедный Крестьянин3", 2, 7);
-        CrossbowMan archer = new CrossbowMan("Лучник на противоположном конце карты", 9, 0);
+        Sniper buivol = new Sniper("BuivolSniper", 10, 1);
+        Field.addUnit(buivol, Field.blue);
+        Field.addUnit(new CrossbowMan("ColyaArcher", 10, 2), Field.blue);
+        Field.addUnit(new Sniper("VadimSniper", 10, 3), Field.blue);
 
-        Field.addUnit(farmer, Field.redTeam);
-        Field.addUnit(archer, Field.blueTeam);
-        Field.addUnit(farmer2, Field.redTeam);
-        Field.addUnit(farmer3, Field.redTeam);
-        BaseUnit closestToArcher = archer.findClosestEnemy();
+        CrossbowMan roma = new CrossbowMan("RomaArcher", 1, 1);
+        Field.addUnit(roma, Field.red);
+        Field.addUnit(new Sniper("IgorSniper", 1, 8), Field.red);
+        Field.addUnit(new CrossbowMan("VityaArcher", 1, 2), Field.red);
+        Field.addUnit(new Sniper("VladislavSniper", 1, 5), Field.red);
+        Field.addUnit(new Sniper("StanislavSniper", 1, 5), Field.red);
+        
+        System.out.println(Field.mapInfo());
 
-        System.out.println(Field.getMapInfo());
-        System.out.printf("Ближайший противник для %s - %s, расстояние до противника - %d клеток", 
-                            archer.getName(), closestToArcher.getName(), archer.getDistance(closestToArcher));
+        Field.battle();
+
+        System.out.println(Field.mapInfo());
     }
 
     // public static BaseUnit randomUnit(int dice) {

@@ -1,15 +1,17 @@
-package HOMM.Units;
+package HOMM.Game;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public abstract class BaseUnit implements Interface {
 
+    public String state = "ready";
     private Integer x, y;
     private ArrayList<BaseUnit> team;
     private String name;
     private int[] damage = new int[2];
     private int hp;
+    private int maxHp;
     private int initiative;
     private int speed;
 
@@ -26,10 +28,11 @@ public abstract class BaseUnit implements Interface {
         this.name = name;
         this.damage = damage;
         this.hp = hp;
+        this.maxHp = hp;
         this.initiative = initiative;
         this.speed = speed;
-        this.x = x - 1;
-        this.y = y - 1;
+        this.x = x;
+        this.y = y;
     }
 
     public Integer getX() {
@@ -56,6 +59,10 @@ public abstract class BaseUnit implements Interface {
         return this.hp;
     }
 
+    public int getMaxHp() {
+        return this.maxHp;
+    }
+
     public int getDamage() {
         return new Random().nextInt(this.damage[0], this.damage[1] + 1);
     }
@@ -80,23 +87,31 @@ public abstract class BaseUnit implements Interface {
         this.team = team;
     }
 
-    public void setHp(int dif) {
-        this.hp -= dif;
+    protected void setHp(int dif) {
+        if (this.hp <= dif) {
+            this.hp = 0;
+            this.state = "dead";
+        }
+        else this.hp -= dif;
+        if (this.hp > this.maxHp) this.hp = this.maxHp;
     }
 
-    public void waiting() {
-    } // реализовать шкалу инициативы
-
     public boolean isAlive() {
-        if (this.hp > 0)
+        if (state.equals("ready") || state.equals("busy"))
             return true;
         return false;
     }
 
+    // public String getInfo() {
+    //     return String.format("Юнит: %s, Имя: %s, клетка на поле х: %d y: %d, команда: %s, хп: %d\n",
+    //             getClass(), getName(), this.x + 1, this.y + 1, getNameTeam(), this.hp)
+    //             .replace("class HOMM.Game.", "");
+    // }
+    
     public String getInfo() {
-        return String.format("Юнит: %s, Имя: %s, клетка на поле х: %d y: %d, команда: %s, хп: %d\n",
-                getClass(), getName(), this.x + 1, this.y + 1, getNameTeam(), this.hp)
-                .replace("class HOMM.Units.", "");
+        return String.format("Юнит: %s, Имя: %s",
+                getClass(), getName())
+                .replace("class HOMM.Game.", "");
     }
 
     public int getDistance(BaseUnit unit) {
@@ -106,11 +121,10 @@ public abstract class BaseUnit implements Interface {
             return -1;
     }
 
-    public BaseUnit findClosestEnemy() {
-        ArrayList<BaseUnit> teamEnemy = this.team.equals(Field.red) ? Field.blue : Field.red;
+    public BaseUnit findClosestUnit(ArrayList<BaseUnit> team) {
         BaseUnit closest = null;
         int minDistance = 13; // максимальная дистанция на поле +1
-        for (BaseUnit unit : teamEnemy) {
+        for (BaseUnit unit : team) {
             if (unit.isAlive() && minDistance > getDistance(unit)) {
                 minDistance = getDistance(unit);
                 closest = unit;

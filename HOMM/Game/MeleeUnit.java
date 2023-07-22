@@ -1,4 +1,4 @@
-package HOMM.Units;
+package HOMM.Game;
 
 public abstract class MeleeUnit extends BaseUnit {
 

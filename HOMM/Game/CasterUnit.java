@@ -1,4 +1,4 @@
-package HOMM.Units;
+package HOMM.Game;
 
 public abstract class CasterUnit extends BaseUnit {
 
@@ -24,13 +24,18 @@ public abstract class CasterUnit extends BaseUnit {
     }
 
     protected boolean setMana(int cost) {
-        if (this.mana > cost) {
+        if (this.mana >= cost) {
             this.mana -= cost;
             return true;
-        } else
+        } else {
+            this.mana += 5; // восстановление маны за пропуск хода
             return false;
+        }
     }
 
+    public abstract boolean cast();
+
     public void step() {
+        cast();
     }
 }

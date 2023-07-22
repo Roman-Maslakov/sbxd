@@ -1,4 +1,4 @@
-package HOMM.Units;
+package HOMM.Game;
 
 public abstract class RangeUnit extends BaseUnit {
 
@@ -40,21 +40,29 @@ public abstract class RangeUnit extends BaseUnit {
     }
 
     public boolean shoot() {
-        BaseUnit enemy = findClosestEnemy();
-        if (isAlive() && haveShots() && enemy != null) {
+        BaseUnit enemy = findClosestUnit(getTeam().equals(Field.red) ? Field.blue : Field.red);
+        if (state.equals("ready") && haveShots() && enemy != null) {
             enemy.setHp(getDamage());
-            if (peasantHere())
+            if (peasantHere()) {
+                System.out.println("Выстрелов - > " + this.shots + " стреляет по " + enemy.getName());
+                state = "busy";
                 return true;
+            }
+            System.out.println("Выстрелов - > " + this.shots + " стреляет по " + enemy.getName());
             this.shots--;
+            state = "busy";
             return true;
         }
+        System.out.println("Нет стрел");
         return false;
     }
 
     public boolean peasantHere() {
         for (BaseUnit unit : getTeam()) {
-            if (unit instanceof Peasant)
+            if (unit.state.equals("ready") && unit instanceof Peasant) {
+                unit.state = "busy";
                 return true;
+            }
         }
         return false;
     }

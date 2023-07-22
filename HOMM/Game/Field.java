@@ -1,17 +1,18 @@
-package HOMM.Units;
+package HOMM.Game;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 
 public class Field {
 
     public static ArrayList<BaseUnit> initiativeScale = new ArrayList<>();
     public static ArrayList<BaseUnit> red = new ArrayList<>();
     public static ArrayList<BaseUnit> blue = new ArrayList<>();
-    public static BaseUnit[][] field = new BaseUnit[10][8]; // 10х8 клеток как в Героях 5))
+    public static BaseUnit[][] field = new BaseUnit[10][10]; 
 
     public static void addUnit(BaseUnit unit, ArrayList<BaseUnit> team) {
-        field[unit.getX()][unit.getY()] = unit;
+        field[unit.getX() - 1][unit.getY() - 1] = unit;
         initiativeScale.add(unit);
         team.add(unit);
         unit.setTeam(team.equals(red) ? red : blue);
@@ -29,28 +30,43 @@ public class Field {
     }
 
     public static void battle() {
+        Scanner scanner = new Scanner(System.in);
         Collections.sort(initiativeScale, ((o2, o1) -> o1.getInitiative() - o2.getInitiative()));
-        while (checkTeams())
-            for (BaseUnit unit : initiativeScale)
-                unit.step();
+        //int i = 0;
+        while (checkTeams()) {
+            View.view();
+            scanner.nextLine();
+            //System.out.println("Ход номер " + ++i + "\n");
+            for (BaseUnit unit : initiativeScale) {
+                if (unit.isAlive()) {
+                    System.out.println("\nХодит " + unit.getName() + " " + unit.getNameTeam() + " хп: " + unit.getHp());
+                    unit.step();
+                }
+            }
+            System.out.println("\n");
+        }
     }
 
     public static boolean checkTeams() {
         boolean flag = false;
-        for (BaseUnit unit : red)
-            if (unit.isAlive())
-                flag = true;
-        if (flag == false) {
-            System.out.println("Синие победили!");
-            return flag; 
-        }
-        flag = false;
         for (BaseUnit unit : blue)
-            if (unit.isAlive())
+            if (unit.isAlive()) {
+                unit.state = "ready";
                 flag = true;
+            }
         if (flag == false) {
             System.out.println("Красные победили!");
-            return flag; 
+            return flag;
+        }
+        flag = false;
+        for (BaseUnit unit : red)
+            if (unit.isAlive()) {
+                unit.state = "ready";
+                flag = true;
+            }
+        if (flag == false) {
+            System.out.println("Синие победили!");
+            return flag;
         }
         return flag;
     }

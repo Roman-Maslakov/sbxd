@@ -1,4 +1,6 @@
-package HOMM.Units;
+package HOMM.Game;
+
+import java.util.ArrayList;
 
 public interface Interface {
 
@@ -6,13 +8,9 @@ public interface Interface {
 
     String getInfo();
 
-    void waiting();
-
     void setX(int x);
 
     void setY(int y);
 
-    void setHp(int dif);
-
-    BaseUnit findClosestEnemy();
+    BaseUnit findClosestUnit(ArrayList<BaseUnit> team);
 }

@@ -109,8 +109,8 @@ public abstract class BaseUnit implements Interface {
     // }
     
     public String getInfo() {
-        return String.format("Юнит: %s, Имя: %s",
-                getClass(), getName())
+        return String.format("Юнит: %s, Имя: %s, коорды %d %d",
+                getClass(), getName(), this.x, this.y)
                 .replace("class HOMM.Game.", "");
     }
 

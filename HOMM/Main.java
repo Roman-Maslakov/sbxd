@@ -5,29 +5,30 @@ import HOMM.Game.*;
 public class Main {
     public static void main(String[] args) {
 
-        Sniper buivol = new Sniper("BuivolSniper", 10, 1);
+        Sniper buivol = new Sniper("Buivol", 10, 1);
         Field.addUnit(buivol, Field.blue);
-        Field.addUnit(new CrossbowMan("ColyaArcher", 10, 2), Field.blue);
-        Field.addUnit(new Sniper("VadimSniper", 10, 3), Field.blue);
+        Field.addUnit(new CrossbowMan("Colya", 10, 2), Field.blue);
         Field.addUnit(new Peasant("Vadimich", 9, 1), Field.blue);
         Field.addUnit(new Peasant("Поц", 9, 2), Field.blue);
-        Field.addUnit(new Peasant("Чувак", 9, 3), Field.blue);
-        Field.addUnit(new Peasant("Чел", 9, 4), Field.blue);
         Field.addUnit(new Monk("Монах", 10, 4), Field.blue);
         Field.addUnit(new Mage("ЧародеЙ", 10, 5), Field.blue);
-        Field.addUnit(new Mage("Василий", 10, 6), Field.blue);
+        Field.addUnit(new SpearMan("Копейщик", 9, 3), Field.blue);
+        Field.addUnit(new Bandit("Бандит", 9, 5), Field.blue);
+        Field.addUnit(new SpearMan("Палка", 9, 7), Field.blue);
+        Field.addUnit(new Bandit("Бед", 9, 9), Field.blue);
 
-        CrossbowMan roma = new CrossbowMan("RomaArcher", 1, 1);
+        CrossbowMan roma = new CrossbowMan("Roma", 1, 1);
         Field.addUnit(roma, Field.red);
-        Field.addUnit(new Sniper("IgorSniper", 1, 2), Field.red);
-        Field.addUnit(new Sniper("VityaArcher", 1, 3), Field.red);
+        Field.addUnit(new Sniper("Igor", 1, 2), Field.red);
         Field.addUnit(new Monk("Геннадий", 1, 4), Field.red);
         Field.addUnit(new Mage("Василий", 1, 5), Field.red);
-        Field.addUnit(new Mage("Анатолий", 1, 6), Field.red);
         Field.addUnit(new Peasant("Пацан", 2, 1), Field.red);
         Field.addUnit(new Peasant("Пацан2", 2, 2), Field.red);
-        Field.addUnit(new Peasant("Человек", 2, 3), Field.red);
-        Field.addUnit(new Peasant("Руффос", 2, 4), Field.red);
+        Field.addUnit(new SpearMan("Красное копье", 2, 3), Field.red);
+        Field.addUnit(new Bandit("Негодяй", 2, 5), Field.red);
+        Field.addUnit(new SpearMan("Алевтий", 2, 7), Field.red);
+        Field.addUnit(new Bandit("Приколист", 2, 9), Field.red);
+        
 
         //System.out.println(Field.mapInfo());
 

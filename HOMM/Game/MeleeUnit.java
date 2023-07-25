@@ -15,9 +15,43 @@ public abstract class MeleeUnit extends BaseUnit {
     }
 
     public void step() {
+        attack();
     }
 
-    public void attack(BaseUnit unit) {
-        unit.setHp(getDamage());
+    public boolean attack() {
+        BaseUnit enemy = findClosestUnit(getTeam().equals(Field.red) ? Field.blue : Field.red);
+        if (super.state.equals("ready") && enemy != null) {
+            if (moveTo(enemy)) {
+                enemy.setHp(getDamage());
+                System.out.println("Ударил по " + enemy.getName());
+                super.state = "busy";
+                return true;
+            }
+            System.out.println("Пошел в сторону "  + enemy.getName());
+            super.state = "busy";
+            return false;
+        }
+        System.out.println("Победил уже");
+        return false;
+    }
+
+    public boolean moveTo(BaseUnit unit) {
+        if (unit.getX() - getX() > 1) {
+            setX(getX() + 1);
+            return false;
+        }
+        if (getX() - unit.getX() > 1) {
+            setX(getX() - 1);
+            return false;
+        }
+        if (unit.getY() - getY() > 1) {
+            setY(getY() + 1);
+            return false;
+        }
+        if (getY() - unit.getY() > 1) {
+            setY(getY() - 1);
+            return false;
+        }
+        return true;
     }
 }

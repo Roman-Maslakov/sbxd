@@ -9,13 +9,16 @@ public class Field {
     public static ArrayList<BaseUnit> initiativeScale = new ArrayList<>();
     public static ArrayList<BaseUnit> red = new ArrayList<>();
     public static ArrayList<BaseUnit> blue = new ArrayList<>();
-    public static BaseUnit[][] field = new BaseUnit[10][10]; 
+    public static BaseUnit[][] field = new BaseUnit[10][10];
 
     public static void addUnit(BaseUnit unit, ArrayList<BaseUnit> team) {
-        field[unit.getX() - 1][unit.getY() - 1] = unit;
-        initiativeScale.add(unit);
-        team.add(unit);
-        unit.setTeam(team.equals(red) ? red : blue);
+        if (field[unit.getX() - 1][unit.getY() - 1] == null) {
+            field[unit.getX() - 1][unit.getY() - 1] = unit;
+            initiativeScale.add(unit);
+            team.add(unit);
+            unit.setTeam(team.equals(red) ? red : blue);
+        }
+        else System.out.println("На клетке уже есть персонаж!");
     }
 
     public static String mapInfo() {
@@ -32,11 +35,11 @@ public class Field {
     public static void battle() {
         Scanner scanner = new Scanner(System.in);
         Collections.sort(initiativeScale, ((o2, o1) -> o1.getInitiative() - o2.getInitiative()));
-        //int i = 0;
+        // int i = 0;
         while (checkTeams()) {
             View.view();
             scanner.nextLine();
-            //System.out.println("Ход номер " + ++i + "\n");
+            // System.out.println("Ход номер " + ++i + "\n");
             for (BaseUnit unit : initiativeScale) {
                 if (unit.isAlive()) {
                     System.out.println("\nХодит " + unit.getName() + " " + unit.getNameTeam() + " хп: " + unit.getHp());
@@ -69,5 +72,12 @@ public class Field {
             return flag;
         }
         return flag;
+    }
+
+    public static boolean checkCoords(int x, int y) {
+        for (BaseUnit unit : initiativeScale) {
+            if (unit.isAlive() && unit.getX() == x && unit.getY() == y) return false;
+        }
+        return true;
     }
 }

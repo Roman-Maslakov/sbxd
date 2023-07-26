@@ -31,25 +31,25 @@ public abstract class MeleeUnit extends BaseUnit {
             super.state = "busy";
             return false;
         }
-        System.out.println("Победил уже");
+        System.out.println("Победили уже");
         return false;
     }
 
     public boolean moveTo(BaseUnit unit) {
         if (unit.getX() - getX() > 1) {
-            setX(getX() + 1);
+            if (Field.checkCoords(getX() + 1, getY())) setX(getX() + 1);
             return false;
         }
         if (getX() - unit.getX() > 1) {
-            setX(getX() - 1);
+            if (Field.checkCoords(getX() - 1, getY())) setX(getX() - 1);
             return false;
         }
         if (unit.getY() - getY() > 1) {
-            setY(getY() + 1);
+            if (Field.checkCoords(getX(), getY() + 1)) setY(getY() + 1);
             return false;
         }
         if (getY() - unit.getY() > 1) {
-            setY(getY() - 1);
+            if (Field.checkCoords(getX(), getY() - 1)) setY(getY() - 1);
             return false;
         }
         return true;

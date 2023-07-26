@@ -38,14 +38,14 @@ public class View {
         String out = "| ";
         for (BaseUnit unit : Field.initiativeScale) {
             if (unit.getX() == x && unit.getY() == y) {
+                if (Field.red.contains(unit))
+                out = "|" + (AnsiColors.ANSI_RED + unit.getName().charAt(0) + AnsiColors.ANSI_RESET);
+                if (Field.blue.contains(unit))
+                out = "|" + (AnsiColors.ANSI_BLUE + unit.getName().charAt(0) + AnsiColors.ANSI_RESET);
                 if (unit.getHp() == 0) {
                     out = "|" + (AnsiColors.ANSI_BLACK + unit.getName().charAt(0) + AnsiColors.ANSI_RESET);
                     break;
                 }
-                if (Field.red.contains(unit))
-                    out = "|" + (AnsiColors.ANSI_RED + unit.getName().charAt(0) + AnsiColors.ANSI_RESET);
-                if (Field.blue.contains(unit))
-                    out = "|" + (AnsiColors.ANSI_BLUE + unit.getName().charAt(0) + AnsiColors.ANSI_RESET);
                 break;
             }
         }
